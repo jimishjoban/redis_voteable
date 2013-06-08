@@ -78,6 +78,10 @@ module RedisVoteable
         up_voters | down_voters
       end
       
+      def up_voters_ids
+        voters = redis.smembers prefixed("#{class_key(self)}:#{UP_VOTERS_ID}")        
+      end
+      
       def up_voters
         voters = redis.smembers prefixed("#{class_key(self)}:#{UP_VOTERS}")
         voters.map do |voter|
@@ -91,6 +95,10 @@ module RedisVoteable
             nil
           end
         end
+      end
+      
+      def down_voters_ids
+        voters = redis.smembers prefixed("#{class_key(self)}:#{DOWN_VOTERS_ID}")        
       end
       
       def down_voters
