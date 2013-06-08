@@ -10,8 +10,8 @@ module RedisVoteable
   
   UP_VOTERS       = "up_voters"
   DOWN_VOTERS     = "dn_voters"
-  UP_VOTERS       = "up_voters_ids"
-  DOWN_VOTERS     = "dn_voters_ids"
+  UP_VOTERS_ID       = "up_voters_ids"
+  DOWN_VOTERS_ID     = "dn_voters_ids"
   UP_VOTES        = "up_votes"
   DOWN_VOTES      = "dn_votes"
   
