@@ -78,6 +78,10 @@ module RedisVoteable
         up_voters | down_voters
       end
       
+      def voters_ids
+        up_voters_ids | down_voters_ids
+      end
+      
       def up_voters_ids
         voters = redis.smembers prefixed("#{class_key(self)}:#{UP_VOTERS_ID}")        
       end
