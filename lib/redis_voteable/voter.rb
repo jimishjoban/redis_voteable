@@ -40,8 +40,10 @@ module RedisVoteable
 
         r = redis.multi do
           redis.srem prefixed("#{class_key(voteable)}:#{DOWN_VOTERS}"), "#{class_key(self)}"
+          redis.srem prefixed("#{class_key(voteable)}:#{DOWN_VOTERS_ID}"), "#{self.id}"
           redis.srem prefixed("#{class_key(self)}:#{DOWN_VOTES}"), "#{class_key(voteable)}"
           redis.sadd prefixed("#{class_key(voteable)}:#{UP_VOTERS}"), "#{class_key(self)}"
+          redis.sadd prefixed("#{class_key(voteable)}:#{UP_VOTERS_ID}"), "#{self.id}"
           redis.sadd prefixed("#{class_key(self)}:#{UP_VOTES}"), "#{class_key(voteable)}"
         end
         raise Exceptions::AlreadyVotedError.new(true) unless r[2] == 1
@@ -67,8 +69,10 @@ module RedisVoteable
 
         r = redis.multi do
           redis.srem prefixed("#{class_key(voteable)}:#{UP_VOTERS}"), "#{class_key(self)}"
+          redis.srem prefixed("#{class_key(voteable)}:#{UP_VOTERS_ID}"), "#{self.id}"
           redis.srem prefixed("#{class_key(self)}:#{UP_VOTES}"), "#{class_key(voteable)}"
           redis.sadd prefixed("#{class_key(voteable)}:#{DOWN_VOTERS}"), "#{class_key(self)}"
+          redis.sadd prefixed("#{class_key(voteable)}:#{DOWN_VOTERS_ID}"), "#{self.id}"
           redis.sadd prefixed("#{class_key(self)}:#{DOWN_VOTES}"), "#{class_key(voteable)}"
         end
         raise Exceptions::AlreadyVotedError.new(false) unless r[2] == 1
